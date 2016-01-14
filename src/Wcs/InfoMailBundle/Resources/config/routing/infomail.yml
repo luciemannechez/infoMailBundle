@@ -1,0 +1,19 @@
+infomail_index:
+    path:     /
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:index" }
+    methods:  GET
+
+infomail_show:
+    path:     /{id}/show
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:show" }
+    methods:  GET
+
+infomail_new:
+    path:     /new
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:new" }
+    methods:  [GET, POST]
+
+infomail_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:delete" }
+    methods:  DELETE

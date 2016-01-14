@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>InfoMail</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ infoMail.id }}</td>
+            </tr>
+            <tr>
+                <th>Subject</th>
+                <td>{{ infoMail.subject }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ infoMail.body }}</td>
+            </tr>
+            <tr>
+                <th>Documentsnames</th>
+                <td>{{ infoMail.documentsNames }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('infomail_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
