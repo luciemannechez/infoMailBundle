@@ -16,9 +16,23 @@ class InfoMailController extends Controller
     {
        // $mail = $this->get('doctrine')->getRepository('IuchBundle:WelcomeMail')->findOneById(1);
 
-        $user_class = $this->container->getParameter('wcs_info_mail.recipients');
+        $config = $this->container->getParameter('wcs_info_mail.recipients');
 
-        print_r($user_class);
+        $user_class = $config['user_class'];
+        $mail_field = $config['mail_field'];
+
+        $users = $this->get('doctrine')->getRepository($user_class)->findAll();
+
+        $destinaires = [];
+        foreach($users as $user)
+        {
+            if ( $user->get('"'.$mail_field.'"') != null )
+            {
+                $destinaires[] = $user->get.ucfirst($mail_field).'()';
+            }
+        }
+
+        print_r($destinaires);
         die();
 
         $destinataire = 'wcs.hopital@gmail.com';
