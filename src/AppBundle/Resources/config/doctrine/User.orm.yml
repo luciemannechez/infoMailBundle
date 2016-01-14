@@ -6,3 +6,12 @@ AppBundle\Entity\User:
             type: integer
             generator:
                 strategy: AUTO
+
+    fields:
+        email:
+            type: string
+            length: 255
+        username:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

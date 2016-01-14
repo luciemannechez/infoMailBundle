@@ -14,7 +14,7 @@ class InfoMailController extends Controller
 
     public function sendMail()
     {
-       // $mail = $this->get('doctrine')->getRepository('IuchBundle:WelcomeMail')->findOneById(1);
+        $mail = $this->get('doctrine')->getRepository('WcsInfoMailBundle:InfoMail');
 
         $config = $this->container->getParameter('wcs_info_mail.recipients');
 
@@ -23,23 +23,19 @@ class InfoMailController extends Controller
 
         $users = $this->get('doctrine')->getRepository($user_class)->findAll();
 
-        $destinaires = [];
+        $recipients = [];
         foreach($users as $user)
         {
-            if ( $user->get('"'.$mail_field.'"') != null )
+            if ( $user->$mail_field() != null )
             {
-                $destinaires[] = $user->get.ucfirst($mail_field).'()';
+                $recipients[] = $user->$mail_field();
             }
         }
 
-        print_r($destinaires);
-        die();
-
-        $destinataire = 'wcs.hopital@gmail.com';
         $sendMessage = \Swift_Message::newInstance()
             ->setSubject('sujet')
             ->setFrom('no-reply@gmail.com')
-            ->setTo($destinataire)
+            ->setTo($recipients)
             ->setBody(
                 $this->renderView(
                     'WcsInfoMailBundle::index.html.twig'

@@ -1,6 +1,6 @@
 Wcs\InfoMailBundle\Entity\InfoMail:
     type: entity
-    table: null
+    repository_class: Wcs\InfoMailBundle\Repository\InfoMailRepository
     id:
         id:
             type: integer

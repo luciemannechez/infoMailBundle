@@ -1,4 +1,3 @@
-infoMail
+infoMailDemo
 ========
-
-A Symfony project created on January 14, 2016, 11:27 am.
+A demo for InfoMailBundle, bundle for symfony. See its page here.

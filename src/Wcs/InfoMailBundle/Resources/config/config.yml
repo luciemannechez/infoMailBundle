@@ -1,4 +1,4 @@
 wcs_info_mail:
     recipients:
         user_class: AppBundle\Entity\User # recipients
-        mail_field: email # field mail name of your class
+        mail_field: getEmail # getter mail name of your entity
