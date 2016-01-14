@@ -1,0 +1,4 @@
+wcs_mail_info:
+    recipients: # configuration of mailing list
+        user_class: AppBundle\Entity\User # recipients
+        mail_field: email # field mail name of your class

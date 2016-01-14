@@ -1,0 +1,7 @@
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /
+
+wcs_info_mail:
+    resource: "@WcsInfoMailBundle/Resources/config/routing.yml"
+    prefix:   /

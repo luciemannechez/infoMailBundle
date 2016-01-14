@@ -1,0 +1,20 @@
+Wcs\InfoMailBundle\Entity\InfoMail:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        subject:
+            type: string
+            length: 255
+        body:
+            type: text
+        documentsNames:
+            type: string
+            length: 255
+            nullable: true
+    lifecycleCallbacks: {  }
