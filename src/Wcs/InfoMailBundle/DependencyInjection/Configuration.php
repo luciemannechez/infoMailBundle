@@ -34,6 +34,14 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                ->arrayNode('uploads')
+                    ->children()
+                        ->scalarNode('directory')
+                            ->defaultValue('uploads/infoMail')
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
             ->end()
         ;
 

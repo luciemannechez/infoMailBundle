@@ -25,8 +25,6 @@ class InfoMailController extends Controller
 
         $infoMails = $em->getRepository('WcsInfoMailBundle:InfoMail')->findAll();
 
-
-
         return $this->render('WcsInfoMailBundle:infomail:index.html.twig', array(
             'infoMails' => $infoMails
         ));
@@ -73,6 +71,47 @@ class InfoMailController extends Controller
         $this->get('mailer')->send($sendMessage);
     }
 
+    public function sendAction(Request $request, $id) {
+        $form = $this->createSendForm($id);
+        $form->handleRequest($request);
+
+        if ($form->isValid() && $form->isSubmitted()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('WcsInfoMailBundle:InfoMail')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find InfoMail entity.');
+            }
+
+            $this->sendMail($entity->getId());
+
+            return $this->redirect($this->generateUrl('infomail_show', array('id'=>$id)));
+        }
+
+        return $this->redirect($this->generateUrl('infomail_index'));
+    }
+
+    /**
+     * Creates a form to send an InfoMail.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createSendForm($id)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('infomail_send', array('id' => $id)))
+            ->setMethod('GET')
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Send',
+                'attr' => array('class' => 'btn btn-primary'),
+            ))
+            ->getForm()
+            ;
+    }
+
     /**
      * Creates a new InfoMail entity.
      *
@@ -87,8 +126,6 @@ class InfoMailController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($infoMail);
             $em->flush();
-
-            //$this->sendMail($infoMail->getId());
 
             return $this->redirectToRoute('infomail_show', array('id' => $infoMail->getId()));
         }
@@ -113,10 +150,12 @@ class InfoMailController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
+        $sendForm = $this->createSendForm($id);
 
         return $this->render('WcsInfoMailBundle:infomail:show.html.twig', array(
             'infoMail' => $infoMail,
             'delete_form' => $deleteForm->createView(),
+            'send_form' => $sendForm->createView(),
         ));
     }
 

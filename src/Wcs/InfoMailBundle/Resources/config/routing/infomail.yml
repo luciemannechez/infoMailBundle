@@ -27,3 +27,8 @@ infomail_delete:
     path:     /{id}/delete
     defaults: { _controller: "WcsInfoMailBundle:InfoMail:delete" }
     methods:  [GET, DELETE]
+
+infomail_send:
+    path:     /{id}/send
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:send" }
+    methods:  GET
