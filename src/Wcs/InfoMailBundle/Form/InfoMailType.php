@@ -18,7 +18,9 @@ class InfoMailType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('typeMail')
+            ->add('subject')
+            ->add('body')
             ->add('uploadedFiles', FileType::class, array(
                 'required' => false,
                 'multiple' => true,

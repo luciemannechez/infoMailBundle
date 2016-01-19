@@ -165,4 +165,33 @@ class InfoMail
     {
         return $this->files;
     }
+    /**
+     * @var \Wcs\InfoMailBundle\Entity\TypeMail
+     */
+    private $typeMail;
+
+
+    /**
+     * Set typeMail
+     *
+     * @param \Wcs\InfoMailBundle\Entity\TypeMail $typeMail
+     *
+     * @return InfoMail
+     */
+    public function setTypeMail(\Wcs\InfoMailBundle\Entity\TypeMail $typeMail = null)
+    {
+        $this->typeMail = $typeMail;
+
+        return $this;
+    }
+
+    /**
+     * Get typeMail
+     *
+     * @return \Wcs\InfoMailBundle\Entity\TypeMail
+     */
+    public function getTypeMail()
+    {
+        return $this->typeMail;
+    }
 }

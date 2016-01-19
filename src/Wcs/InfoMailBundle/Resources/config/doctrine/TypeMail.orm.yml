@@ -1,0 +1,15 @@
+Wcs\InfoMailBundle\Entity\TypeMail:
+    type: entity
+    table: null
+    repositoryClass: Wcs\InfoMailBundle\Repository\TypeMailRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        type:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

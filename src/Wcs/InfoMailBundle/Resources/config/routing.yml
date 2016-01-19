@@ -2,6 +2,10 @@ wcs_info_mail_infomail:
     resource: "@WcsInfoMailBundle/Resources/config/routing/infomail.yml"
     prefix:   /infomail
 
+wcs_info_mail_typemail:
+    resource: "@WcsInfoMailBundle/Resources/config/routing/typemail.yml"
+    prefix:   /typemail
+
 wcs_info_mail_homepage:
     path:     /
     defaults: { _controller: WcsInfoMailBundle:InfoMail:index }

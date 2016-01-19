@@ -18,6 +18,12 @@ Wcs\InfoMailBundle\Entity\InfoMail:
             targetEntity: Wcs\InfoMailBundle\Entity\File
             mappedBy: infoMail
             cascade: [ persist, remove ]
+    manyToOne:
+        typeMail:
+            targetEntity: Wcs\InfoMailBundle\Entity\TypeMail
+            joinColumn:
+                name: typeMail_id
+                referencedColumnName: id
 
     lifecycleCallbacks:
         preFlush: [ upload ]

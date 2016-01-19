@@ -7,7 +7,9 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Names</th>
+                <th>Subject</th>
+                <th>TypeMail</th>
+                <th>Documents</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,7 +17,13 @@
         {% for infoMail in infoMails %}
             <tr>
                 <td><a href="{{ path('infomail_show', { 'id': infoMail.id }) }}">{{ infoMail.id }}</a></td>
-                <td>{{ infoMail.name }}</td>
+                <td>{{ infoMail.subject }}</td>
+                <td>{{ infoMail.typeMail }}</td>
+                <td>
+                    {% for file in infoMail.files %}
+                        {{ file.name }}
+                    {% endfor %}
+                </td>
                 <td>
                     <ul>
                         <li>

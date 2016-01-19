@@ -14,10 +14,11 @@ class File
      */
     function __construct(UploadedFile $uploadedFile)
     {
-        $path = sha1(uniqid(mt_rand(), true)).'.'.$uploadedFile->guessExtension();
+        $cleanFilename = ucwords(preg_replace("/[^a-z0-9\\.]/", "", strtolower($uploadedFile->getClientOriginalName())));
+        $path = uniqid().'-'.$cleanFilename;
         $this->setPath($path);
         $this->setSize($uploadedFile->getClientSize());
-        $this->setName($uploadedFile->getClientOriginalName());
+        $this->setName($cleanFilename);
         $uploadedFile->move($this->getUploadRootDir(), $path);
     }
 

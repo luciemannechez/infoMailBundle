@@ -103,9 +103,16 @@ class InfoMailController extends Controller
      * Finds and displays a InfoMail entity.
      *
      */
-    public function showAction(InfoMail $infoMail)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($infoMail);
+        $em = $this->getDoctrine()->getManager();
+        $infoMail = $em->getRepository('WcsInfoMailBundle:InfoMail')->findOneById($id);
+
+        if (!$infoMail) {
+            throw $this->createNotFoundException('Unable to find InfoMail entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('WcsInfoMailBundle:infomail:show.html.twig', array(
             'infoMail' => $infoMail,

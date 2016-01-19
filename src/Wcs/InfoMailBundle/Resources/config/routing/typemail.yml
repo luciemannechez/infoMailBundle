@@ -1,0 +1,24 @@
+typemail_index:
+    path:     /
+    defaults: { _controller: "WcsInfoMailBundle:TypeMail:index" }
+    methods:  GET
+
+typemail_show:
+    path:     /{id}/show
+    defaults: { _controller: "WcsInfoMailBundle:TypeMail:show" }
+    methods:  GET
+
+typemail_new:
+    path:     /new
+    defaults: { _controller: "WcsInfoMailBundle:TypeMail:new" }
+    methods:  [GET, POST]
+
+typemail_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "WcsInfoMailBundle:TypeMail:edit" }
+    methods:  [GET, POST]
+
+typemail_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "WcsInfoMailBundle:TypeMail:delete" }
+    methods:  DELETE
