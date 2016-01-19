@@ -23,6 +23,7 @@ class WcsInfoMailExtension extends Extension
         $processedConfig = $this->processConfiguration( $configuration, $configs );
 
         $container->setParameter( 'wcs_info_mail.recipients', $processedConfig['recipients']);
+        $container->setParameter( 'wcs_info_mail.uploads', $processedConfig['uploads']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

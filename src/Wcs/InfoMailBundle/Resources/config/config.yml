@@ -2,3 +2,5 @@ wcs_info_mail:
     recipients:
         user_class: AppBundle\Entity\User # recipients
         mail_field: getEmail # function to get email of your entity
+    uploads:
+        directory: uploads/infoMail #name of directories for uploads (inside web directory) default uploads/infoMail

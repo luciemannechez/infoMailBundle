@@ -2,6 +2,7 @@
 
 namespace Wcs\InfoMailBundle\Form;
 
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,7 +21,8 @@ class InfoMailType extends AbstractType
         $builder
             ->add('typeMail')
             ->add('subject')
-            ->add('body')
+            ->add('body', CKEditorType::class, array(
+                'config_name' => 'my_config'))
             ->add('uploadedFiles', FileType::class, array(
                 'required' => false,
                 'multiple' => true,

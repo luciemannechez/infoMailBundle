@@ -73,3 +73,7 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\User
 
+ivory_ck_editor:
+    configs:
+        my_config:
+            toolbar: [  [ 'Image', '-', 'Link','Unlink' ], "/", [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat', '-', 'NumberedList','BulletedList', '-', 'JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], "/", [ 'Styles','Format','FontSize', 'TextColor' ] ]
