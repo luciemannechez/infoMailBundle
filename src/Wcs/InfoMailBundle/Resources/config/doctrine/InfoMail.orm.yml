@@ -1,6 +1,5 @@
 Wcs\InfoMailBundle\Entity\InfoMail:
     type: entity
-    repository_class: Wcs\InfoMailBundle\Repository\InfoMailRepository
     id:
         id:
             type: integer
@@ -13,8 +12,12 @@ Wcs\InfoMailBundle\Entity\InfoMail:
             length: 255
         body:
             type: text
-        documentsNames:
-            type: string
-            length: 255
-            nullable: true
-    lifecycleCallbacks: {  }
+
+    oneToMany:
+        files:
+            targetEntity: Wcs\InfoMailBundle\Entity\File
+            mappedBy: infoMail
+            cascade: [ persist, remove ]
+
+    lifecycleCallbacks:
+        preFlush: [ upload ]

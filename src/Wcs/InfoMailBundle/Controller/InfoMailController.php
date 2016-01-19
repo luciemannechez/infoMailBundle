@@ -2,6 +2,7 @@
 
 namespace Wcs\InfoMailBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -23,6 +24,8 @@ class InfoMailController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $infoMails = $em->getRepository('WcsInfoMailBundle:InfoMail')->findAll();
+
+
 
         return $this->render('WcsInfoMailBundle:infomail:index.html.twig', array(
             'infoMails' => $infoMails
@@ -85,7 +88,7 @@ class InfoMailController extends Controller
             $em->persist($infoMail);
             $em->flush();
 
-            $this->sendMail($infoMail->getId());
+            //$this->sendMail($infoMail->getId());
 
             return $this->redirectToRoute('infomail_show', array('id' => $infoMail->getId()));
         }
@@ -111,36 +114,116 @@ class InfoMailController extends Controller
     }
 
     /**
+     * Displays a form to edit an existing InfoMail entity
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('WcsInfoMailBundle:InfoMail')->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find InfoMail entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return $this->render('WcsInfoMailBundle:infomail:edit.html.twig', array(
+            'entity' => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView()
+        ));
+    }
+
+    /**
+     * Creates a form to edit a InfoMail entity.
+     * @param InfoMail $entity
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createEditForm(InfoMail $entity)
+    {
+        $form = $this->createForm(InfoMailType::class, $entity, array(
+            'action' => $this->generateUrl('infomail_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+        $form->add('submit', SubmitType::class, array('label' => 'Update'));
+        return $form;
+    }
+
+    /**
+     * Edits an existing InfoMail entity
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('WcsInfoMailBundle:InfoMail')->findOneById($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find InfoMail entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+            return $this->redirect($this->generateUrl('infomail_edit', array('id' => $id)));
+        }
+
+        return $this->render('WcsInfoMailBundle:infomail:edit.html.twig', array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        ));
+    }
+
+    /**
      * Deletes a InfoMail entity.
      *
      */
-    public function deleteAction(Request $request, InfoMail $infoMail)
-    {
-        $form = $this->createDeleteForm($infoMail);
+    public function deleteAction(Request $request, $id) {
+
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid() || $request->isMethod('GET')) {
+
             $em = $this->getDoctrine()->getManager();
-            $em->remove($infoMail);
+            $entity = $em->getRepository('WcsInfoMailBundle:InfoMail')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find InfoMail entity.');
+            }
+
+            $em->remove($entity);
             $em->flush();
         }
-
-        return $this->redirectToRoute('infomail_index');
+        return $this->redirect($this->generateUrl('infomail_index'));
     }
 
     /**
      * Creates a form to delete a InfoMail entity.
      *
-     * @param InfoMail $infoMail The InfoMail entity
+     * @param mixed $id The entity id
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm(InfoMail $infoMail)
+    private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('infomail_delete', array('id' => $infoMail->getId())))
+            ->setAction($this->generateUrl('infomail_delete', array('id' => $id)))
             ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, array(
+                'label' => 'Delete',
+                'attr' => array('class' => 'btn btn-danger'),
+            ))
             ->getForm()
-        ;
+            ;
     }
 }

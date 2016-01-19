@@ -1,0 +1,3 @@
+# src/Wcs/InfoMailBundle/Resources/config/validation.yml
+#Wcs\InfoMailBundle\Entity\InfoMail:
+#    properties:

@@ -13,7 +13,17 @@ infomail_new:
     defaults: { _controller: "WcsInfoMailBundle:InfoMail:new" }
     methods:  [GET, POST]
 
+infomail_edit:
+    path: /{id}/edit
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:edit" }
+    methods:  [GET, POST]
+
+infomail_update:
+    path: /{id}/update
+    defaults: { _controller: "WcsInfoMailBundle:InfoMail:update" }
+    methods:  PUT
+
 infomail_delete:
     path:     /{id}/delete
     defaults: { _controller: "WcsInfoMailBundle:InfoMail:delete" }
-    methods:  DELETE
+    methods:  [GET, DELETE]

@@ -2,13 +2,59 @@
 
 namespace Wcs\InfoMailBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * InfoMail
  */
 class InfoMail
 {
+    public function __construct() {
+        $this->files = new ArrayCollection();
+        $this->uploadedFiles = new ArrayCollection();
+    }
+
     /**
-     * @var int
+     * @ORM\PreFlush()
+     */
+    public function upload()
+    {
+
+        foreach($this->uploadedFiles as $uploadedFile)
+        {
+            if ($uploadedFile) {
+                $file = new File($uploadedFile);
+                $this->getFiles()->add($file);
+                $file->setInfoMail($this);
+                unset($uploadedFile);
+            }
+        }
+    }
+
+    /**
+     * @var ArrayCollection
+     */
+    private $uploadedFiles;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles;
+    }
+    /**
+     * @param ArrayCollection $uploadedFiles
+     */
+    public function setUploadedFiles($uploadedFiles)
+    {
+        $this->uploadedFiles = $uploadedFiles;
+    }
+
+    // GENERATED  CODE
+    /**
+     * @var integer
      */
     private $id;
 
@@ -23,15 +69,15 @@ class InfoMail
     private $body;
 
     /**
-     * @var string
+     * @var \Doctrine\Common\Collections\Collection
      */
-    private $documentsNames;
+    private $files;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -43,7 +89,7 @@ class InfoMail
      *
      * @param string $subject
      *
-     * @return MailInfo
+     * @return InfoMail
      */
     public function setSubject($subject)
     {
@@ -67,7 +113,7 @@ class InfoMail
      *
      * @param string $body
      *
-     * @return MailInfo
+     * @return InfoMail
      */
     public function setBody($body)
     {
@@ -87,27 +133,36 @@ class InfoMail
     }
 
     /**
-     * Set documentsNames
+     * Add file
      *
-     * @param string $documentsNames
+     * @param \Wcs\InfoMailBundle\Entity\File $file
      *
-     * @return MailInfo
+     * @return InfoMail
      */
-    public function setDocumentsNames($documentsNames)
+    public function addFile(\Wcs\InfoMailBundle\Entity\File $file)
     {
-        $this->documentsNames = $documentsNames;
+        $this->files[] = $file;
 
         return $this;
     }
 
     /**
-     * Get documentsNames
+     * Remove file
      *
-     * @return string
+     * @param \Wcs\InfoMailBundle\Entity\File $file
      */
-    public function getDocumentsNames()
+    public function removeFile(\Wcs\InfoMailBundle\Entity\File $file)
     {
-        return $this->documentsNames;
+        $this->files->removeElement($file);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }
-

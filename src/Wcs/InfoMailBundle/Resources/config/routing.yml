@@ -4,4 +4,4 @@ wcs_info_mail_infomail:
 
 wcs_info_mail_homepage:
     path:     /
-    defaults: { _controller: WcsInfoMailBundle:Mail:index }
+    defaults: { _controller: WcsInfoMailBundle:InfoMail:index }

@@ -1,0 +1,30 @@
+Wcs\InfoMailBundle\Entity\File:
+    type: entity
+    table: null
+    repositoryClass: Wcs\InfoMailBundle\Repository\FileRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        path:
+            type: string
+            length: 255
+        name:
+            type: string
+            length: 255
+        size:
+            type: integer
+
+    manyToOne:
+        infoMail:
+            targetEntity: Wcs\InfoMailBundle\Entity\InfoMail
+            inversedBy: files
+            joinColumn:
+                name: infoMail_id
+                referencedColumnName: id
+
+    lifecycleCallbacks:
+        postRemove: [ removeFile ]
